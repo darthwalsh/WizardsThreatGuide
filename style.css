@@ -3,9 +3,23 @@ body {
   font-size: 2rem;
 }
 
+.float {
+  float: right;
+  padding-bottom: 0.5rem;
+}
+
 .purple {
   color: white;
   background-color: #170a3e;
+}
+
+/* TODO figure out inverted? */
+
+.inv-purple {
+  color: #170a3e;
+  background-color: white;
+  font-weight: bold;
+  border: medium solid #170a3e;
 }
 
 button {
@@ -14,23 +28,20 @@ button {
   font-size: 2rem;
 }
 
-#issue {
-  float: right;
-}
-
 #tabs {
   display: flex;
   flex-direction: row;
   margin-left: -0.2rem;
   margin-right: -0.2rem;
+
+  overflow-x: auto;
 }
+
+/* TODO remove margins? backgrounds? */
 
 #tabs > * {
   margin-left: 0.2rem;
   margin-right: 0.2rem;
-  flex-grow: 1;
   
-  color: white;
-  background-color: #170a3e;
   font-size: 2rem;
 }

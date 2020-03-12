@@ -274,17 +274,28 @@ foundableRaw.forEach(line => {
     }
 });
 
+function $(id) {
+    return document.getElementById(id);
+}
+
+let selected = "summary";
 for (const r in registry) {
     const reg = registry[r];
+
+    const img = document.createElement("img");
+    $("tabs").appendChild(img);
+    img.src = `img/${r.replace(/ /g, '').toLowerCase()}.png`;
+    img.alt = r;
+    img.height = 113;
+    img.width = 113;
+    img.onclick = null; // TODO
+    
     for (const s in reg) {
         if (!reg[s].length) console.error(r, s, 'is empty');
     }
 }
 
 
-function $(id) {
-    return document.getElementById(id);
-}
 
 $("issue").onclick = () => {
     const codeBlock = "```";
