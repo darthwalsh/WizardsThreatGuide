@@ -189,6 +189,19 @@ Young Luna Lovegood|Medium|Wild|Room of Requirement I|Legends of Hogwarts
 Young Ron Weasley|Medium|Wild|Chess Chamber|Legends of Hogwarts
 `.trim().split('\n');
 
+foundableRaw.push(...`
+Fred Weasley|Severe|Wild|Room of Requirement V|Legends of Hogwarts
+George Weasley|Severe|Wild|Room of Requirement V|Legends of Hogwarts
+Parvati Patil|High|Wild|Room of Requirement V|Legends of Hogwarts
+Angelina Johnson|Medium|Wild|Room of Requirement V|Legends of Hogwarts
+Dumbledore’s Army Sign-up Sheet|Emergency|Wizarding Challenges|Room of Requirement V|Legends of Hogwarts
+Angelina and Fred|High|Wild|Yule Ball Great Hall|Legends of Hogwarts
+Hermione and Viktor|Severe|Wild|Yule Ball Great Hall|Legends of Hogwarts
+Hagrid and Madame Maxime|High|Wild|Yule Ball Great Hall|Legends of Hogwarts
+Parvati and Harry|Severe|Wild|Yule Ball Great Hall|Legends of Hogwarts
+Yule Ball Program|Emergency|Wizarding Challenges|Yule Ball Great Hall|Legends of Hogwarts
+`.trim().split('\n'));
+
 const registry = `
 Care of Magical Creatures
 Hagrid’s Hut
@@ -260,6 +273,14 @@ foundableRaw.forEach(line => {
         console.error(e.message, line)
     }
 });
+
+for (const r in registry) {
+    const reg = registry[r];
+    for (const s in reg) {
+        if (!reg[s].length) console.error(r, s, 'is empty');
+    }
+}
+
 
 function $(id) {
     return document.getElementById(id);
