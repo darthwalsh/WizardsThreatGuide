@@ -278,24 +278,41 @@ function $(id) {
     return document.getElementById(id);
 }
 
-let selected = "summary";
 for (const r in registry) {
     const reg = registry[r];
+    const id = r.replace(/ /g, '').toLowerCase();
 
     const img = document.createElement("img");
     $("tabs").appendChild(img);
-    img.src = `img/${r.replace(/ /g, '').toLowerCase()}.png`;
+    img.src = `img/${id}.png`;
+    img.id = id;
     img.alt = r;
     img.height = 113;
     img.width = 113;
     img.onclick = null; // TODO
+
+    const tab = document.createElement("div");
+    $("tab").appendChild(tab);
+    tab.textContent = Object.keys(reg).join(' ');
+    tab.style.display = "none";
+    tab.id = "tab-" + id;
     
     for (const s in reg) {
         if (!reg[s].length) console.error(r, s, 'is empty');
     }
 }
 
+$("tabs").onclick = e => switchTo(e.target.id);
 
+let selected = null;
+function switchTo(id) {
+    if (selected) {
+        $(selected).style.display = "none";
+    }
+    selected = "tab-" + id;
+    $(selected).style.display = "";
+}
+switchTo('careofmagicalcreatures');
 
 $("issue").onclick = () => {
     const codeBlock = "```";
