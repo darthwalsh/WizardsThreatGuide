@@ -43,7 +43,6 @@ for (const r in registry) {
 
     const tab = document.createElement("div");
     $("tab").appendChild(tab);
-    tab.textContent = Object.keys(reg).join(' ');
     tab.style.display = "none";
     tab.id = "tab-" + id;
 
@@ -51,10 +50,21 @@ for (const r in registry) {
     
     for (const s in reg) {
         if (!reg[s].length) console.error(r, s, 'is empty');
+
+        tab.append(s);
+        const ul = document.createElement("ul");
+        tab.appendChild(ul);
+
+        const sub = reg[s];
+        for (const foundable of sub) {
+            const li = document.createElement("li");
+            ul.appendChild(li);
+            li.innerText = foundable.name;
+        }
     }
 }
 
-$("tabs").onclick = e => switchTo(e.target.id);
+$("tabs").onclick = e => e.target.nodeName == "IMG" && switchTo(e.target.id);
 
 $("issue").onclick = () => {
     const codeBlock = "```";
