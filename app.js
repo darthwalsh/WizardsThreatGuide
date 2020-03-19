@@ -19,6 +19,15 @@ function $(id) {
     return document.getElementById(id);
 }
 
+let selected = null;
+function switchTo(id) {
+    if (selected) {
+        $(selected).style.display = "none";
+    }
+    selected = "tab-" + id;
+    $(selected).style.display = "";
+}
+
 for (const r in registry) {
     const reg = registry[r];
     const id = r.replace(/ /g, '').toLowerCase();
@@ -37,6 +46,8 @@ for (const r in registry) {
     tab.textContent = Object.keys(reg).join(' ');
     tab.style.display = "none";
     tab.id = "tab-" + id;
+
+    if (!selected) switchTo(id);
     
     for (const s in reg) {
         if (!reg[s].length) console.error(r, s, 'is empty');
@@ -44,16 +55,6 @@ for (const r in registry) {
 }
 
 $("tabs").onclick = e => switchTo(e.target.id);
-
-let selected = null;
-function switchTo(id) {
-    if (selected) {
-        $(selected).style.display = "none";
-    }
-    selected = "tab-" + id;
-    $(selected).style.display = "";
-}
-switchTo('careofmagicalcreatures');
 
 $("issue").onclick = () => {
     const codeBlock = "```";
