@@ -201,6 +201,10 @@ Hermione and Viktor|Severe|Wild|Yule Ball Great Hall|Legends of Hogwarts
 Hagrid and Madame Maxime|High|Wild|Yule Ball Great Hall|Legends of Hogwarts
 Parvati and Harry|Severe|Wild|Yule Ball Great Hall|Legends of Hogwarts
 Yule Ball Program|Emergency|Wizarding Challenges|Yule Ball Great Hall|Legends of Hogwarts
+Antipodean Opaleye Egg|Medium|Portkey|Oddities III|Oddities
+Chinese Fireball Egg|Medium|Portkey|Oddities III|Oddities
+Common Welsh Green Egg|Medium|Portkey|Oddities IV|Oddities
+Peruvian Vipertooth Egg|Medium|Portkey|Oddities IV|Oddities
 `.trim().split('\n'));
 
 const registryRaw = `
