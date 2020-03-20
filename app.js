@@ -19,18 +19,18 @@ function $(id) {
     return document.getElementById(id);
 }
 
-let selected = null;
-function switchTo(id) {
-    if (selected) {
-        $(selected).style.display = "none";
+let selectedTab = null;
+function switchTab(id) {
+    if (selectedTab) {
+        $(selectedTab).style.display = "none";
     }
-    selected = "tab-" + id;
-    $(selected).style.display = "";
+    selectedTab = "tab-" + id;
+    $(selectedTab).style.display = "";
 }
 
 for (const r in registry) {
     const reg = registry[r];
-    const id = r.replace(/ /g, '').toLowerCase();
+    const id = r.replace(/ /g, '');
 
     const img = document.createElement("img");
     $("tabs").appendChild(img);
@@ -46,7 +46,7 @@ for (const r in registry) {
     tab.style.display = "none";
     tab.id = "tab-" + id;
 
-    if (!selected) switchTo(id);
+    if (!selectedTab) switchTab(id);
     
     for (const s in reg) {
         if (!reg[s].length) console.error(r, s, 'is empty');
@@ -60,11 +60,26 @@ for (const r in registry) {
             const li = document.createElement("li");
             ul.appendChild(li);
             li.innerText = foundable.name;
+            li.id = foundable.name.replace(/[^a-z]/gi, '');
         }
     }
 }
 
-$("tabs").onclick = e => e.target.nodeName == "IMG" && switchTo(e.target.id);
+$("tabs").onclick = e => e.target.nodeName === "IMG" && switchTab(e.target.id);
+
+const done = new Set();
+/** @param {HTMLElement} el */
+function toggleDone(el) {
+    const id = el.id;
+    if (done.has(id)) {
+        done.delete(id);
+        el.classList.remove('done');
+    } else {
+        done.add(id);
+        el.classList.add('done');
+    }
+}
+$("tab").onclick = e => e.target.nodeName === "LI" && toggleDone(e.target);
 
 $("issue").onclick = () => {
     const codeBlock = "```";
