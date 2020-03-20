@@ -21,25 +21,29 @@ function $(id) {
 
 let selectedTab = null;
 function switchTab(id) {
-    if (selectedTab) {
-        $(selectedTab).style.display = "none";
+    if (id === selectedTab) {
+        id = "Summary";
     }
-    selectedTab = "tab-" + id;
-    $(selectedTab).style.display = "";
+
+    if (selectedTab) {
+        $("tab-" + selectedTab).style.display = "none";
+    }
+    selectedTab = id;
+    $("tab-" + selectedTab).style.display = "";
 }
 
 for (const r in registry) {
     const reg = registry[r];
     const id = r.replace(/ /g, '');
 
+    const th = document.createElement("th");
+    $("tabs").appendChild(th);
+
     const img = document.createElement("img");
-    $("tabs").appendChild(img);
+    th.appendChild(img);
     img.src = `img/${id}.png`;
     img.id = id;
     img.alt = r;
-    img.height = 113;
-    img.width = 113;
-    img.onclick = null; // TODO
 
     const tab = document.createElement("div");
     $("tab").appendChild(tab);
@@ -65,6 +69,17 @@ for (const r in registry) {
     }
 }
 
+for (const colorLetter of 'WYOR'.split('')) { // TODO use images
+    const tr = document.createElement("tr");
+    $("tab-Summary").appendChild(tr);
+    for (const _ in registry) {
+        const td = document.createElement("td");
+        tr.appendChild(td);
+        td.innerText = colorLetter;
+    }
+}
+
+$("summary").onclick = e => switchTab("Summary");
 $("tabs").onclick = e => e.target.nodeName === "IMG" && switchTab(e.target.id);
 
 const done = new Set();
@@ -78,9 +93,11 @@ function toggleDone(el) {
         done.add(id);
         el.classList.add('done');
     }
+    // TODO write changes to localStorage, or even firebase?
 }
 $("tab").onclick = e => e.target.nodeName === "LI" && toggleDone(e.target);
 
+// TODO make this a setting tab with data export and import and README
 $("issue").onclick = () => {
     const codeBlock = "```";
     const body = `**Description of the problem:**
