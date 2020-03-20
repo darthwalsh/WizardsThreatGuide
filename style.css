@@ -46,6 +46,11 @@ button {
   font-size: 2rem;
 }
 
+#tab {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 ul {
   list-style-type: none;
   margin-top: 0;
