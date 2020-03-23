@@ -41,7 +41,7 @@ for (const r in registry) {
 
     const img = document.createElement("img");
     th.appendChild(img);
-    img.src = `img/${id}.png`;
+    img.src = `img/${id.toLowerCase()}.png`;
     img.id = id;
     img.alt = r;
 
