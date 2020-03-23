@@ -69,13 +69,16 @@ for (const r in registry) {
     }
 }
 
-for (const colorLetter of 'WYOR'.split('')) { // TODO use images
+const colors = ['blank', 'yellow', 'orange', 'red'];
+for (const color of colors) {
     const tr = document.createElement("tr");
     $("tab-Summary").appendChild(tr);
     for (const _ in registry) {
         const td = document.createElement("td");
         tr.appendChild(td);
-        td.innerText = colorLetter;
+        const img = document.createElement("img");
+        td.appendChild(img);
+        img.src = `img/flame-${color}.png`;
     }
 }
 

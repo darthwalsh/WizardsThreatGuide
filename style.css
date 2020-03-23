@@ -1,6 +1,7 @@
 body {
   font-family: "Zapf Chancery", "Lucida Calligraphy" , script;
   font-size: 2rem;
+  overflow-y:scroll;
 }
 
 .float {
@@ -32,7 +33,7 @@ th {
   padding: 0;
 }
 
-th > img {
+table img {
   width: 100%;
   height: auto;
 }
