@@ -25,11 +25,59 @@ function switchTab(id) {
         id = "Summary";
     }
 
+    if (id === "Summary") {
+        updateSummary();
+    }
+
     if (selectedTab) {
         $("tab-" + selectedTab).style.display = "none";
     }
     selectedTab = id;
     $("tab-" + selectedTab).style.display = "";
+}
+
+const levelToRow = {
+    Low: 0,
+    Medium: 0,
+    High: 1,
+    Severe: 2,
+    Emergency: 3,
+};
+
+function updateSummary() {
+    const tbody = $("tab-Summary");
+
+    let col = 0;
+    for (const reg of Object.values(registry)) {
+        const threats = Array(4).fill().map(_ => ({ done: 0, total: 0 }));
+        for (const sub of Object.values(reg)) {
+            for (const {name, level, collect} of sub) {
+                if (!collect.includes('Wild')) continue;
+
+                const row = levelToRow[level];
+                ++threats[row].total;
+
+                if (done.has(name.replace(/[^a-z]/gi, ''))) {
+                    ++threats[row].done;
+                }
+            }
+        }
+
+        for (let tr = tbody.firstElementChild, row = 0; tr; tr = tr.nextElementSibling, ++row) {
+            const td = tr.children[col];
+            const {done, total} = threats[row]
+            td.style.background = done === total ? 'grey' : '#a5d6a7';
+        }
+
+        ++col;
+    }
+}
+
+const done = new Set();
+for (const key in localStorage) {
+    if (key.startsWith('done-')) {
+        done.add(key.substring('done-'.length));
+    }
 }
 
 for (const r in registry) {
@@ -65,6 +113,9 @@ for (const r in registry) {
             ul.appendChild(li);
             li.innerText = foundable.name;
             li.id = foundable.name.replace(/[^a-z]/gi, '');
+            if (done.has(li.id)) {
+                li.classList.add('done');
+            }
         }
     }
 }
@@ -85,18 +136,20 @@ for (const color of colors) {
 $("summary").onclick = e => switchTab("Summary");
 $("tabs").onclick = e => e.target.nodeName === "IMG" && switchTab(e.target.id);
 
-const done = new Set();
 /** @param {HTMLElement} el */
 function toggleDone(el) {
     const id = el.id;
+    const key = 'done-' + id;
     if (done.has(id)) {
         done.delete(id);
         el.classList.remove('done');
+        localStorage.removeItem(key);
     } else {
         done.add(id);
         el.classList.add('done');
+        localStorage.setItem(key, true);
     }
-    // TODO write changes to localStorage, or even firebase?
+    // MAYBE write to firebase instead of localStorage?
 }
 $("tab").onclick = e => e.target.nodeName === "LI" && toggleDone(e.target);
 
