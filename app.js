@@ -164,8 +164,8 @@ $("issue").onclick = () => {
 
 **Your configuration:**
 ${codeBlock}
-${"TODO"}
-${codeBlock}`; // TODO configuration
+${[...done].join('\n')}
+${codeBlock}`;
     const url = `https://github.com/darthwalsh/WizardsThreatGuide/issues/new?body=${encodeURIComponent(body)}`;
     var win = window.open(url, '_blank');
     win.focus();
