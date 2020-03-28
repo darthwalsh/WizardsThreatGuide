@@ -1,3 +1,26 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyDcnQNN4RP73kIMYp5RMyarCplwInb6wNc",
+    authDomain: "wizardsthreatguide.firebaseapp.com",
+    databaseURL: "https://wizardsthreatguide.firebaseio.com",
+    projectId: "wizardsthreatguide",
+    storageBucket: "wizardsthreatguide.appspot.com",
+    messagingSenderId: "843184506598",
+    appId: "1:843184506598:web:148bd23d336aa9870b9d27",
+}; // TODO trim out unneeded values
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const doneRef = database.ref('done/id123'); //TODO auth and database rules
+
+async function isDone(id) {
+    const snapshot = await doneRef.child(id).once('value');
+    return Boolean(snapshot.val());
+}
+
+/** @returns {Promise} */
+function setDone(id, value) {
+    return doneRef.child(id).set(value);
+}
+// TODO use listener for changes so el.classList.remove('done');
 
 const registry = registryRaw.reduce((o, c) => {
     const lines = c.split('\n');
@@ -44,12 +67,12 @@ const levelToRow = {
     Emergency: 3,
 };
 
-function updateSummary() {
+async function updateSummary() {
     const tbody = $("tab-Summary");
 
     let col = 0;
     for (const reg of Object.values(registry)) {
-        const threats = Array(4).fill().map(_ => ({ done: 0, total: 0 }));
+        const threats = Array(4).fill().map(_ => ({ clicked: 0, total: 0 }));
         for (const sub of Object.values(reg)) {
             for (const {name, level, collect} of sub) {
                 if (!collect.includes('Wild')) continue;
@@ -57,26 +80,19 @@ function updateSummary() {
                 const row = levelToRow[level];
                 ++threats[row].total;
 
-                if (done.has(name.replace(/[^a-z]/gi, ''))) {
-                    ++threats[row].done;
+                if (await isDone(name.replace(/[^a-z]/gi, ''))) { // TODO start all then Promise.all?
+                    ++threats[row].clicked;
                 }
             }
         }
 
         for (let tr = tbody.firstElementChild, row = 0; tr; tr = tr.nextElementSibling, ++row) {
             const td = tr.children[col];
-            const {done, total} = threats[row]
-            td.style.background = done === total ? 'grey' : '#a5d6a7';
+            const {clicked, total} = threats[row]
+            td.style.background = clicked === total ? 'grey' : '#a5d6a7';
         }
 
         ++col;
-    }
-}
-
-const done = new Set();
-for (const key in localStorage) {
-    if (key.startsWith('done-')) {
-        done.add(key.substring('done-'.length));
     }
 }
 
@@ -113,9 +129,7 @@ for (const r in registry) {
             ul.appendChild(li);
             li.innerText = foundable.name;
             li.id = foundable.name.replace(/[^a-z]/gi, '');
-            if (done.has(li.id)) {
-                li.classList.add('done');
-            }
+            isDone(li.id).then(b => b && li.classList.add('done'));
         }
     }
 }
@@ -137,25 +151,23 @@ $("summary").onclick = e => switchTab("Summary");
 $("tabs").onclick = e => e.target.nodeName === "IMG" && switchTab(e.target.id);
 
 /** @param {HTMLElement} el */
-function toggleDone(el) {
+async function toggleDone(el) {
     const id = el.id;
-    const key = 'done-' + id;
-    if (done.has(id)) {
-        done.delete(id);
+    if (await isDone(id)) {
+        setDone(id, false);
         el.classList.remove('done');
-        localStorage.removeItem(key);
     } else {
-        done.add(id);
+        setDone(id, true);
         el.classList.add('done');
-        localStorage.setItem(key, true);
     }
-    // MAYBE write to firebase instead of localStorage?
 }
 $("tab").onclick = e => e.target.nodeName === "LI" && toggleDone(e.target);
 
 // TODO make this a setting tab with data export and import and README
-$("issue").onclick = () => {
+$("issue").onclick = async () => {
     const codeBlock = "```";
+    const doneSnapshot = await doneRef.once('value');
+    const doneKeys = Object.keys(doneSnapshot.val());
     const body = `**Description of the problem:**
 
 **What you saw happen:**
@@ -164,7 +176,7 @@ $("issue").onclick = () => {
 
 **Your configuration:**
 ${codeBlock}
-${[...done].join('\n')}
+${doneKeys.join('\n')}
 ${codeBlock}`;
     const url = `https://github.com/darthwalsh/WizardsThreatGuide/issues/new?body=${encodeURIComponent(body)}`;
     var win = window.open(url, '_blank');
