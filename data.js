@@ -205,6 +205,11 @@ Antipodean Opaleye Egg|Medium|Portkey|Oddities III|Oddities
 Chinese Fireball Egg|Medium|Portkey|Oddities III|Oddities
 Common Welsh Green Egg|Medium|Portkey|Oddities IV|Oddities
 Peruvian Vipertooth Egg|Medium|Portkey|Oddities IV|Oddities
+Young James Potter|Emergency|Wild|Hogwarts Grounds|Legends of Hogwarts
+Young Sirius Black|High|Wild|Hogwarts Grounds|Legends of Hogwarts
+Young Remus Lupin|Severe|Wild|Hogwarts Grounds|Legends of Hogwarts
+Young Peter Pettigrew|High|Wild|Hogwarts Grounds|Legends of Hogwarts
+Unfinished Marauder’s Map|Emergency|Wizarding Challenges|Hogwarts Grounds|Legends of Hogwarts
 `.trim().split('\n'));
 
 const registryRaw = `
@@ -230,6 +235,7 @@ Potions Classroom
 Chess Chamber
 Room of Requirement V
 Yule Ball Great Hall
+Hogwarts Grounds
 
 Ministry of Magic
 Ministry Atrium
