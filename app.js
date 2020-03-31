@@ -1,3 +1,4 @@
+(async () => {
 const firebaseConfig = {
     apiKey: "AIzaSyDcnQNN4RP73kIMYp5RMyarCplwInb6wNc",
     authDomain: "wizardsthreatguide.firebaseapp.com",
@@ -9,18 +10,16 @@ const firebaseConfig = {
 }; // TODO trim out unneeded values
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-const doneRef = database.ref('done/id123'); //TODO auth and database rules
+const cred = await firebase.auth().signInAnonymously();
+const userRef = database.ref('users').child(cred.user.uid);
+userRef.child('__MODIFIED').set(new Date().toJSON());
+const doneRef = userRef.child('done');
+// TODO google oauth
 
 async function isDone(id) {
     const snapshot = await doneRef.child(id).once('value');
     return Boolean(snapshot.val());
 }
-
-/** @returns {Promise} */
-function setDone(id, value) {
-    return doneRef.child(id).set(value);
-}
-// TODO use listener for changes so el.classList.remove('done');
 
 const registry = registryRaw.reduce((o, c) => {
     const lines = c.split('\n');
@@ -129,10 +128,12 @@ for (const r in registry) {
             ul.appendChild(li);
             li.innerText = foundable.name;
             li.id = foundable.name.replace(/[^a-z]/gi, '');
-            isDone(li.id).then(b => b && li.classList.add('done'));
         }
     }
 }
+
+doneRef.on('child_added', data => $(data.key).classList.add('done'));
+doneRef.on('child_removed', data => $(data.key).classList.remove('done'));
 
 const colors = ['blank', 'yellow', 'orange', 'red'];
 for (const color of colors) {
@@ -150,18 +151,15 @@ for (const color of colors) {
 $("summary").onclick = e => switchTab("Summary");
 $("tabs").onclick = e => e.target.nodeName === "IMG" && switchTab(e.target.id);
 
-/** @param {HTMLElement} el */
-async function toggleDone(el) {
-    const id = el.id;
+async function toggleDone(id) {
     if (await isDone(id)) {
-        setDone(id, false);
-        el.classList.remove('done');
+        doneRef.child(id).remove();
     } else {
-        setDone(id, true);
-        el.classList.add('done');
+        doneRef.child(id).set(true);
     }
 }
-$("tab").onclick = e => e.target.nodeName === "LI" && toggleDone(e.target);
+
+$("tab").onclick = e => e.target.nodeName === "LI" && toggleDone(e.target.id);
 
 // TODO make this a setting tab with data export and import and README
 $("issue").onclick = async () => {
@@ -182,4 +180,4 @@ ${codeBlock}`;
     var win = window.open(url, '_blank');
     win.focus();
 };
-
+})();
