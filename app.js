@@ -79,7 +79,7 @@
           const row = levelToRow[level];
           ++threats[row].total;
 
-          if (await isDone(name.replace(/[^a-z]/gi, ''))) { // TODO start all then Promise.all?
+          if (await isDone(name.replace(/[^a-z]/gi, ''))) {
             ++threats[row].clicked;
           }
         }
