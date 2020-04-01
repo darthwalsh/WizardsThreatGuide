@@ -1,25 +1,15 @@
-(async () => {
-  const firebaseConfig = {
-    apiKey: "AIzaSyDcnQNN4RP73kIMYp5RMyarCplwInb6wNc",
-    authDomain: "wizardsthreatguide.firebaseapp.com",
-    databaseURL: "https://wizardsthreatguide.firebaseio.com",
-    projectId: "wizardsthreatguide",
-    storageBucket: "wizardsthreatguide.appspot.com",
-    messagingSenderId: "843184506598",
-    appId: "1:843184506598:web:148bd23d336aa9870b9d27",
-  }; // TODO trim out unneeded values
-  firebase.initializeApp(firebaseConfig);
-  const database = firebase.database();
-  const cred = await firebase.auth().signInAnonymously();
-  const userRef = database.ref('users').child(cred.user.uid);
-  userRef.child('__MODIFIED').set(new Date().toJSON());
-  const doneRef = userRef.child('done');
-  // TODO google oauth
+window.addEventListener("error", e => alert(e.error.message + " from " + e.error.stack));
 
-  async function isDone(id) {
-    const snapshot = await doneRef.child(id).once('value');
-    return Boolean(snapshot.val());
+(async () => {
+  let storage = getStorage();
+
+  if (!storage) {
+    storage = await new Promise(res => {
+      $("sync").onclick = () => res(useStorage("sync"));
+      $("anon").onclick = () => res(useStorage("local"));
+    });
   }
+  $("front").style.display = 'none';
 
   const registry = registryRaw.reduce((o, c) => {
     const lines = c.split('\n');
@@ -79,7 +69,7 @@
           const row = levelToRow[level];
           ++threats[row].total;
 
-          if (await isDone(name.replace(/[^a-z]/gi, ''))) {
+          if (await storage.get(name.replace(/[^a-z]/gi, ''))) {
             ++threats[row].clicked;
           }
         }
@@ -128,12 +118,13 @@
         ul.appendChild(li);
         li.innerText = foundable.name;
         li.id = foundable.name.replace(/[^a-z]/gi, '');
+        storage.get(li.id).then(done => done && li.classList.add('done'));
       }
     }
   }
 
-  doneRef.on('child_added', data => $(data.key).classList.add('done'));
-  doneRef.on('child_removed', data => $(data.key).classList.remove('done'));
+  storage.onAdd = id => $(id).classList.add('done');
+  storage.onRemove = id => $(id).classList.remove('done');
 
   const colors = ['blank', 'yellow', 'orange', 'red'];
   for (const color of colors) {
@@ -152,20 +143,22 @@
   $("tabs").onclick = e => e.target.nodeName === "IMG" && switchTab(e.target.id);
 
   async function toggleDone(id) {
-    if (await isDone(id)) {
-      doneRef.child(id).remove();
-    } else {
-      doneRef.child(id).set(true);
-    }
+    const before = await storage.get(id);
+    return storage.set(id, !before);
   }
 
   $("tab").onclick = e => e.target.nodeName === "LI" && toggleDone(e.target.id);
 
-  // TODO make this a setting tab with data export and import and README
+  $("sign-out").onclick = () => {
+    storage.clear();
+    location.reload(false);
+  };
+
+  // TODO add data export and import to settings
+  // TODO add README
   $("issue").onclick = async () => {
     const codeBlock = "```";
-    const doneSnapshot = await doneRef.once('value');
-    const doneKeys = Object.keys(doneSnapshot.val());
+    const doneKeys = await allDone();
     const body = `**Description of the problem:**
 
 **What you saw happen:**
