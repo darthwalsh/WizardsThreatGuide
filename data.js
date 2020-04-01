@@ -19,6 +19,9 @@ Then run this on the DevTools console:
 Schema: Foundable|Threat Level|How to collect it|Registry Sub-section|Registry
 */
 
+// TODO update this to instead be a json object, with sensible order within each page
+// TODO get capture chances from https://foundables.com/?r=capture
+
 const foundableRaw = `
 Abraxan Winged Horse|Emergency|Wizarding Challenges|Hagrid’s Hut|Care of Magical Creatures
 Acromantula Eggs|Low|Portkey & Wild|Pumpkin Patch|Care of Magical Creatures
@@ -211,6 +214,8 @@ Young Remus Lupin|Severe|Wild|Hogwarts Grounds|Legends of Hogwarts
 Young Peter Pettigrew|High|Wild|Hogwarts Grounds|Legends of Hogwarts
 Unfinished Marauder’s Map|Emergency|Wizarding Challenges|Hogwarts Grounds|Legends of Hogwarts
 Wild Boar|Emergency|Wizarding Challenges|Moving Staircases II|Hogwarts School
+Ministry Employee Newt Scamander|Emergency|Special|Ministry Atrium II|Ministry of Magic
+Gryffindor Quidditch Banner|Emergency|Wizarding Challenges|Hogwarts Quidditch Stands|Magical Games and Sports
 `.trim().split('\n'));
 
 const registryRaw = `
