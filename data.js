@@ -210,6 +210,7 @@ Young Sirius Black|High|Wild|Hogwarts Grounds|Legends of Hogwarts
 Young Remus Lupin|Severe|Wild|Hogwarts Grounds|Legends of Hogwarts
 Young Peter Pettigrew|High|Wild|Hogwarts Grounds|Legends of Hogwarts
 Unfinished Marauder’s Map|Emergency|Wizarding Challenges|Hogwarts Grounds|Legends of Hogwarts
+Wild Boar|Emergency|Wizarding Challenges|Moving Staircases II|Hogwarts School
 `.trim().split('\n'));
 
 const registryRaw = `
