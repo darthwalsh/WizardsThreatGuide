@@ -11,22 +11,6 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
   }
   $("front").style.display = 'none';
 
-  const registry = registryRaw.reduce((o, c) => {
-    const lines = c.split('\n');
-    o[lines.shift()] = lines.reduce((o, c) => (o[c] = [], o), {});
-    return o;
-  }, {});
-
-  foundableRaw.forEach(line => {
-    const [name, level, collect, sub, reg] = line.split('|');
-
-    try {
-      registry[reg][sub].push({name, level, collect});
-    } catch (e) {
-      console.error(e.message, line)
-    }
-  });
-
   function $(id) {
     return document.getElementById(id);
   }
@@ -63,7 +47,8 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     for (const reg of Object.values(registry)) {
       const threats = Array(4).fill().map(_ => ({clicked: 0, total: 0}));
       for (const sub of Object.values(reg)) {
-        for (const {name, level, collect} of sub) {
+        for (const name in sub) {
+          const {level, collect} = sub[name];
           if (!collect.includes('Wild')) continue;
 
           const row = levelToRow[level];
@@ -113,11 +98,11 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
       tab.appendChild(ul);
 
       const sub = reg[s];
-      for (const foundable of sub) {
+      for (const name in sub) {
         const li = document.createElement("li");
         ul.appendChild(li);
-        li.innerText = foundable.name;
-        li.id = foundable.name.replace(/[^a-z]/gi, '');
+        li.innerText = name;
+        li.id = name.replace(/[^a-z]/gi, '');
         storage.get(li.id).then(done => done && li.classList.add('done'));
       }
     }
