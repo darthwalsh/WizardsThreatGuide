@@ -137,11 +137,26 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     location.reload(false);
   };
 
-  // TODO add data export and import to settings
+  $("import-export").onclick = async () => {
+    $("data").style.display = '';
+    $("textarea").value = (await storage.keys()).join('\n');
+  };
+  $("export-copy").onclick = () => {
+    navigator.clipboard.writeText($("textarea").value);
+    $("data").style.display = 'none';
+  };
+  $("import-button").onclick = () => {
+    $("textarea").value.split('\n').forEach(s => storage.set(s, true));
+    $("data").style.display = 'none';
+  }
+
+  $("data").onclick = e => {
+    if (e.target === $("data")) $("data").style.display = 'none';
+  }
+
   // TODO add README
   $("issue").onclick = async () => {
     const codeBlock = "```";
-    const doneKeys = await allDone();
     const body = `**Description of the problem:**
 
 **What you saw happen:**
@@ -150,7 +165,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
 **Your configuration:**
 ${codeBlock}
-${doneKeys.join('\n')}
+${(await storage.keys()).join('\n')}
 ${codeBlock}`;
     const url = `https://github.com/darthwalsh/WizardsThreatGuide/issues/new?body=${encodeURIComponent(body)}`;
     var win = window.open(url, '_blank');

@@ -4,7 +4,7 @@ body {
   overflow-y:scroll;
 }
 
-#front {
+.front {
   background: #404040F0;
   display:flex;
   justify-content:center;
@@ -60,4 +60,9 @@ ul {
 
 .done {
   text-decoration: line-through;
+}
+
+textarea {
+  width: 40em;
+  height: 90%;
 }
