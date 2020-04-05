@@ -69,6 +69,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
       ++col;
     }
   }
+  switchTab("Summary");
 
   for (const r in registry) {
     const reg = registry[r];
@@ -87,8 +88,6 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     $("tab").appendChild(tab);
     tab.style.display = "none";
     tab.id = "tab-" + id;
-
-    if (!selectedTab) switchTab(id);
 
     for (const s in reg) {
       if (!reg[s].length) console.error(r, s, 'is empty');
