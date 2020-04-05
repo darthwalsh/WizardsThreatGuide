@@ -158,7 +158,7 @@ Remembrall|Low|Wild|Room of Requirement II|Mysterious Artefacts
 Rowena Ravenclaw Wizard Portrait|High|Wild|Moving Staircases II|Hogwarts School
 Rubeus Hagrid|Emergency|Wild|Hagrid’s Hut|Care of Magical Creatures
 Salazar Slytherin Wizard Portrait|High|Wild|Moving Staircases II|Hogwarts School
-Self-playing Harp|High|Portkey & Wild|Room of Requirement IV|Wonders of the Wizarding World
+Self-playing Harp|Medium|Portkey & Wild|Room of Requirement IV|Wonders of the Wizarding World
 Severus Snape|High|Wild|Potions Classroom|Legends of Hogwarts
 Sirius Black|High|Portkey & Wild|Potions Classroom|Legends of Hogwarts
 Sirius Flying Motorbike|Emergency|Wizarding Challenges|Room of Requirement III|Mysterious Artefacts
