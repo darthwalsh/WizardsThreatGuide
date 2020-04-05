@@ -27,9 +27,11 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
     if (selectedTab) {
       $("tab-" + selectedTab).style.display = "none";
+      if (selectedTab !== "Summary") $(selectedTab).style.background = '';
     }
     selectedTab = id;
     $("tab-" + selectedTab).style.display = "";
+    if (selectedTab !== "Summary") $(selectedTab).style.background = 'grey';
   }
 
   const levelToRow = {
@@ -90,8 +92,6 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     tab.id = "tab-" + id;
 
     for (const s in reg) {
-      if (!reg[s].length) console.error(r, s, 'is empty');
-
       tab.append(s);
       const ul = document.createElement("ul");
       tab.appendChild(ul);
@@ -123,7 +123,6 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     }
   }
 
-  $("summary").onclick = e => switchTab("Summary");
   $("tabs").onclick = e => e.target.nodeName === "IMG" && switchTab(e.target.id);
 
   async function toggleDone(id) {
