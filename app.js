@@ -64,7 +64,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
       for (let tr = tbody.firstElementChild, row = 0; tr; tr = tr.nextElementSibling, ++row) {
         const td = tr.children[col];
-        const {clicked, total} = threats[row]
+        const {clicked, total} = threats[row];
         td.style.background = clicked === total ? 'grey' : '#a5d6a7';
       }
 
@@ -172,3 +172,5 @@ ${codeBlock}`;
     win.focus();
   };
 })();
+
+// TODO tap ul to make all false, or if all false then all true

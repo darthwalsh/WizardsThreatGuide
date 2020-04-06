@@ -1,12 +1,14 @@
 // cSpell:disable
 
+// TODO list sources
+// TODO validate against https://gamepress.gg/wizardsunite/reference/foundables-list
 // MAYBE get capture chances from https://foundables.com/?r=capture
 
 const registry = {
   "Care of Magical Creatures": {
     "Hagrid’s Hut": {
-      "Abraxan Winged Horse": {level: "Emergency", collect: "Wizarding Challenges"},
-      "Hagrids Hut": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Abraxan Winged Horse": {collect: "Wizarding Challenges"},
+      "Hagrids Hut": {collect: "Wizarding Challenges"},
       "Rubeus Hagrid": {level: "Emergency", collect: "Wild"},
       "Buckbeak": {level: "Severe", collect: "Portkey & Wild"},
       "Norwegian Ridgeback Baby": {level: "High", collect: "Wild"},
@@ -24,7 +26,7 @@ const registry = {
       "Baby Unicorn": {level: "Medium", collect: "Wild"},
       "Blast-Ended Skrewt": {level: "Medium", collect: "Wild"},
       "Dragon Egg": {level: "Medium", collect: "Portkey & Wild"},
-      "Puffskein": {level: "Low", collect: "Wizarding Challenges"},
+      "Puffskein": {collect: "Wizarding Challenges"},
     }
   },
   "Dark Arts": {
@@ -37,15 +39,15 @@ const registry = {
     },
     "Knockturn Alley": {
       "Swooping Evil": {level: "Severe", collect: "Portkey & Wild"},
-      "Knockturn Alley Sign": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Knockturn Alley Sign": {collect: "Wizarding Challenges"},
       "Portrait of Bellatrix Lestrange": {level: "Medium", collect: "Wild"},
       "Hag": {level: "Medium", collect: "Wild"},
       "Thestral": {level: "High", collect: "Wild"},
       "Ministry Executioner": {level: "Medium", collect: "Portkey & Wild"},
     },
     "Fallen Ministry Atrium": {
-      "Magic is Might Statue": {level: "Emergency", collect: "Wizarding Challenges"},
-      "Tom Riddle Sr's Gravestone": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Magic is Might Statue": {collect: "Wizarding Challenges"},
+      "Tom Riddle Sr's Gravestone": {collect: "Wizarding Challenges"},
       "Percival Graves": {level: "Severe", collect: "Wild"},
       "Tom Riddle": {level: "Emergency", collect: "Wild"},
       "Portrait of Voldemort": {level: "High", collect: "Portkey & Wild"},
@@ -63,20 +65,20 @@ const registry = {
       "Professor Flitwick": {level: "Medium", collect: "Wild"},
       "Minerva Mcgonagall": {level: "Emergency", collect: "Wild"},
       "Peeves": {level: "High", collect: "Wild"},
-      "Hogwarts House Cup": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Hogwarts House Cup": {collect: "Wizarding Challenges"},
       "Moaning Myrtle": {level: "High", collect: "Wild"},
       "Pomona Sprout": {level: "Medium", collect: "Wild"},
     },
     "Great Hall": {
       "Fawkes": {level: "Severe", collect: "Wild"},
       "Portrait of Dumbledore": {level: "Medium", collect: "Portkey & Wild"},
-      "House Hourglass Set": {level: "Emergency", collect: "Wizarding Challenges"},
-      "Owl Lecturn": {level: "Emergency", collect: "Wizarding Challenges"},
+      "House Hourglass Set": {collect: "Wizarding Challenges"},
+      "Owl Lecturn": {collect: "Wizarding Challenges"},
       "Sorting Hat": {level: "Severe", collect: "Portkey & Wild"},
     },
     "Moving Staircases II": {
       "Helga Hufflepuff Wizard Portrait": {level: "High", collect: "Wild"},
-      "Wild Boar": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Wild Boar": {collect: "Wizarding Challenges"},
       "Rowena Ravenclaw Wizard Portrait": {level: "High", collect: "Wild"},
       "Salazar Slytherin Wizard Portrait": {level: "High", collect: "Wild"},
       "Godric Gryffindor Wizard Portrait": {level: "High", collect: "Wild"},
@@ -94,15 +96,15 @@ const registry = {
     "Potions Classroom": {
       "Hedwig": {level: "Low", collect: "Wild"},
       "Young Harry Potter": {level: "Severe", collect: "Portkey & Wild"},
-      "Half Blood Prince's Advanced Potion Making": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Half Blood Prince's Advanced Potion Making": {collect: "Wizarding Challenges"},
       "Sirius Black": {level: "High", collect: "Portkey & Wild"},
       "Severus Snape": {level: "High", collect: "Wild"},
     },
     "Chess Chamber": {
-      "Flying Key": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Flying Key": {collect: "Wizarding Challenges"},
       "Hermione Granger": {level: "Severe", collect: "Wild"},
       "Albus Dumbledore": {level: "Emergency", collect: "Wild"},
-      "Wizard Chess Queen": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Wizard Chess Queen": {collect: "Wizarding Challenges"},
       "Young Ron Weasley": {level: "Medium", collect: "Wild"},
     },
     "Room of Requirement V": {
@@ -110,21 +112,21 @@ const registry = {
       "Angelina Johnson": {level: "Medium", collect: "Wild"},
       "Parvati Patil": {level: "High", collect: "Wild"},
       "George Weasley": {level: "Severe", collect: "Wild"},
-      "Dumbledore’s Army Sign-up Sheet": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Dumbledore’s Army Sign-up Sheet": {collect: "Wizarding Challenges"},
     },
     "Yule Ball Great Hall": {
       "Angelina and Fred": {level: "High", collect: "Wild"},
       "Hagrid and Madame Maxime": {level: "High", collect: "Wild"},
       "Hermione and Viktor": {level: "Severe", collect: "Wild"},
       "Parvati and Harry": {level: "Severe", collect: "Wild"},
-      "Yule Ball Program": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Yule Ball Program": {collect: "Wizarding Challenges"},
     },
     "Hogwarts Grounds": {
       "Young Sirius Black": {level: "High", collect: "Wild"},
       "Young James Potter": {level: "Emergency", collect: "Wild"},
       "Young Remus Lupin": {level: "Severe", collect: "Wild"},
       "Young Peter Pettigrew": {level: "High", collect: "Wild"},
-      "Unfinished Marauder’s Map": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Unfinished Marauder’s Map": {collect: "Wizarding Challenges"},
     }
   },
   "Ministry of Magic": {
@@ -137,16 +139,16 @@ const registry = {
     },
     "Ministry Atrium II": {
       "The Veil": {level: "Severe", collect: "Portkey & Wild"},
-      "Fountain Of Magical Brethren": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Fountain Of Magical Brethren": {collect: "Wizarding Challenges"},
       "Bogrod": {level: "Medium", collect: "Wild"},
       "Tank of Brains": {level: "Severe", collect: "Wild"},
-      "Ministry Employee Newt Scamander": {level: "Emergency", collect: "Special"},
+      "Ministry Employee Newt Scamander": {level: "Emergency", collect: "Wild"},
     },
     "Courtroom Ten": {
       "Arthur Weasley": {level: "Medium", collect: "Portkey & Wild"},
       "Alastor Moody": {level: "High", collect: "Portkey & Wild"},
-      "Ministry Visitors Entrance": {level: "Emergency", collect: "Wizarding Challenges"},
-      "Wizengamot Accusation Chair": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Ministry Visitors Entrance": {collect: "Wizarding Challenges"},
+      "Wizengamot Accusation Chair": {collect: "Wizarding Challenges"},
       "Nymphadora Tonks": {level: "High", collect: "Wild"},
     }
   },
@@ -163,15 +165,15 @@ const registry = {
       "Erumpent": {level: "Medium", collect: "Wild"},
       "Demiguise": {level: "High", collect: "Portkey & Wild"},
       "Branch of Bowtruckles": {level: "Medium", collect: "Wild"},
-      "Pickett": {level: "Severe", collect: "Portkey and Wild"},
-      "Murtlap": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Pickett": {level: "Severe", collect: "Portkey & Wild"},
+      "Murtlap": {collect: "Wizarding Challenges"},
     },
     "New York City Street": {
-      "Thunderbird": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Thunderbird": {collect: "Wizarding Challenges"},
       "Newt Scamander": {level: "Emergency", collect: "Wild"},
       "Unicorn": {level: "Severe", collect: "Wild"},
       "Occamy Eggs": {level: "High", collect: "Portkey & Wild"},
-      "Occamy": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Occamy": {collect: "Wizarding Challenges"},
     }
   },
   "Magical Games and Sports": {
@@ -183,7 +185,7 @@ const registry = {
       "Chudley Cannons Player": {level: "Low", collect: "Portkey & Wild"},
     },
     "Hogwarts Quidditch Pitch": {
-      "Quidditch Pitch Stands": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Quidditch Pitch Stands": {collect: "Wizarding Challenges"},
       "Bludger": {level: "Medium", collect: "Wild"},
       "Golden Snitch": {level: "High", collect: "Wild"},
       "Beaters Bat": {level: "Medium", collect: "Wild"},
@@ -193,12 +195,12 @@ const registry = {
     "Triwizard Maze": {
       "Nimbus 2000": {level: "Medium", collect: "Portkey & Wild"},
       "Harry Potter - Quidditch": {level: "Emergency", collect: "Wild"},
-      "Triwizard Cup": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Triwizard Cup": {collect: "Wizarding Challenges"},
       "Goblet Of Fire": {level: "Severe", collect: "Portkey & Wild"},
-      "Book Quidditch Through The Ages": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Book Quidditch Through The Ages": {collect: "Wizarding Challenges"},
     },
     "Hogwarts Quidditch Stands": {
-      "Gryffindor Quidditch Banner": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Gryffindor Quidditch Banner": {collect: "Wizarding Challenges"},
       "Quidditch Fan Seamus": {level: "Medium", collect: "Wild"},
       "Quidditch Fan Luna": {level: "High", collect: "Wild"},
       "Quidditch Fan Neville": {level: "High", collect: "Wild"},
@@ -216,17 +218,17 @@ const registry = {
     "Dumbledore’s Office": {
       "Mirror Of Erised": {level: "High", collect: "Portkey & Wild"},
       "Philosophers Stone": {level: "Severe", collect: "Wild"},
-      "Sword Of Gryffindor": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Sword Of Gryffindor": {collect: "Wizarding Challenges"},
       "Pensieve": {level: "Severe", collect: "Portkey & Wild"},
       "Dumbledore’s Memory Cabinet": {level: "Medium", collect: "Portkey & Wild"},
     },
     "Room of Requirement III": {
       "Marauders Map": {level: "Medium", collect: "Wild"},
-      "Cursed Opal Necklace": {level: "High", collect: "Wizarding Challenges"},
+      "Cursed Opal Necklace": {collect: "Wizarding Challenges"},
       "Mad-Eye Moody’s Eye": {level: "High", collect: "Wild"},
       "Time Turner": {level: "Emergency", collect: "Wild"},
       "Omnioculars": {level: "Medium", collect: "Wild"},
-      "Sirius Flying Motorbike": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Sirius Flying Motorbike": {collect: "Wizarding Challenges"},
     }
   },
   "Wonders of the Wizarding World": {
@@ -241,13 +243,13 @@ const registry = {
       "Howler": {level: "Medium", collect: "Wild"},
       "Whomping Willow": {level: "Emergency", collect: "Wild"},
       "Weasley's Flying Car": {level: "Severe", collect: "Portkey & Wild"},
-      "Knight Bus": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Knight Bus": {collect: "Wizarding Challenges"},
       "Grawp": {level: "Severe", collect: "Wild"},
       "Wanted Poster of Sirius Black": {level: "Medium", collect: "Wild"},
     },
     "King’s Cross Station": {
-      "Hogwarts Express Engine": {level: "Emergency", collect: "Wizarding Challenges"},
-      "Platform 9 3/4 Sign": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Hogwarts Express Engine": {collect: "Wizarding Challenges"},
+      "Platform 9 3/4 Sign": {collect: "Wizarding Challenges"},
       "Foe Glass": {level: "High", collect: "Portkey & Wild"},
       "Giants Helm": {level: "Low", collect: "Wild"},
       "Mandrake": {level: "High", collect: "Wild"},
@@ -257,14 +259,14 @@ const registry = {
     "Oddities I": {
       "Pixie": {level: "Low", collect: "Wild"},
       "Centaur": {level: "Medium", collect: "Wild"},
-      "Centaur's Bow": {level: "Emergency", collect: "Wizarding Challenges"},
+      "Centaur's Bow": {collect: "Wizarding Challenges"},
       "Vampire": {level: "High", collect: "Wild"},
       "Werewolf": {level: "High", collect: "Wild"},
     },
     "Oddities II": {
       "Doxy": {level: "Low", collect: "Wild"},
       "Horned Serpent": {level: "Emergency", collect: "Portkey & Wild"},
-      "Horned Serpent Egg": {level: "High", collect: "Wizarding Challenges"},
+      "Horned Serpent Egg": {collect: "Wizarding Challenges"},
       "Erklings": {level: "High", collect: "Wild"},
       "Leprechaun": {level: "Medium", collect: "Wild"},
     },
