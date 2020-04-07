@@ -10,6 +10,10 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     });
   }
   $("front").style.display = 'none';
+  switch (storageMethod()) {
+    case "sync": $("sign-out").innerText = "Sign out of Google"; break;
+    case "local": $("sign-out").innerText = "Clear local storage"; break;
+  }
 
   function $(id) {
     return document.getElementById(id);
@@ -56,7 +60,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
           const row = levelToRow[level];
           ++threats[row].total;
 
-          if (await storage.get(name.replace(/[^a-z]/gi, ''))) {
+          if (await storage.get(toId(name))) {
             ++threats[row].clicked;
           }
         }
@@ -75,7 +79,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
   for (const r in registry) {
     const reg = registry[r];
-    const id = r.replace(/ /g, '');
+    const id = toId(r);
 
     const th = document.createElement("th");
     $("tabs").appendChild(th);
@@ -92,7 +96,11 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     tab.id = "tab-" + id;
 
     for (const s in reg) {
-      tab.append(s);
+      const span = document.createElement("span");
+      tab.appendChild(span);
+      span.innerText = s;
+      span.id = r + '.' + s;
+      
       const ul = document.createElement("ul");
       tab.appendChild(ul);
 
@@ -101,7 +109,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
         const li = document.createElement("li");
         ul.appendChild(li);
         li.innerText = name;
-        li.id = name.replace(/[^a-z]/gi, '');
+        li.id = toId(name);
         storage.get(li.id).then(done => done && li.classList.add('done'));
       }
     }
@@ -125,12 +133,27 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
   $("tabs").onclick = e => e.target.nodeName === "IMG" && switchTab(e.target.id);
 
+  function toId(name) {
+    return name.replace(/[^a-z]/gi, '');
+  }
   async function toggleDone(id) {
     const before = await storage.get(id);
     return storage.set(id, !before);
   }
+  async function toggleAll(id) {
+    const [reg, sub] = id.split('.');
+    const ids = Object.keys(registry[reg][sub]).map(toId);
+    const allDones = await Promise.all(ids.map(async id => await storage.get(id)));
+    const noneDone = allDones.every(done => !done);
+    return Promise.all(ids.map(id => storage.set(id, noneDone)));
+  }
 
-  $("tab").onclick = e => e.target.nodeName === "LI" && toggleDone(e.target.id);
+  $("tab").onclick = e => {
+    switch(e.target.nodeName) {
+      case "LI": toggleDone(e.target.id); break;
+      case "SPAN": toggleAll(e.target.id); break;
+    }
+  }
 
   $("sign-out").onclick = () => {
     storage.clear();
@@ -172,5 +195,3 @@ ${codeBlock}`;
     win.focus();
   };
 })();
-
-// TODO tap ul to make all false, or if all false then all true

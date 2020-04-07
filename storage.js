@@ -1,5 +1,5 @@
 function getStorage() {
-  const method = localStorage.getItem('__STORAGE');
+  const method = storageMethod();
   if (!method) return null;
 
   switch (method) {
@@ -7,6 +7,10 @@ function getStorage() {
     case "sync": return new StorageSync();
   }
   throw new Error("unrecognized storage " + method);
+}
+
+function storageMethod() {
+  return localStorage.getItem('__STORAGE');
 }
 
 function useStorage(method) {
