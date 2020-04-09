@@ -1,3 +1,6 @@
+/// <reference path="./data.js" />
+/// <reference path="./storage.js" />
+
 window.addEventListener("error", e => alert(e.error.message + " from " + e.error.stack));
 
 (async () => {
