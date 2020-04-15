@@ -55,7 +55,20 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
     let col = 0;
     for (const reg of Object.values(registry)) {
-      const threats = Array(5).fill().map(_ => ({clicked: 0, total: 0}));
+      const essentials = [];
+      for (const sub of Object.values(reg)) {
+        let unfinished = [];
+        for (const name in sub) {
+          if (!await storage.get(toId(name))) {
+            unfinished.push(toId(name));
+          }
+        }
+        if (unfinished.length === 1) {
+          essentials.push(unfinished[0]);
+        }
+      }
+
+      const threats = Array(5).fill().map(_ => ({essential: 0, clicked: 0, total: 0}));
       for (const sub of Object.values(reg)) {
         for (const name in sub) {
           const {level, collect} = sub[name];
@@ -73,13 +86,23 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
           if (await storage.get(toId(name))) {
             ++threats[row].clicked;
           }
+          if (essentials.includes(toId(name))) {
+            ++threats[row].essential;
+          }
         }
       }
 
       for (let tr = tbody.firstElementChild, row = 0; tr; tr = tr.nextElementSibling, ++row) {
         const td = tr.children[col];
-        const {clicked, total} = threats[row];
-        td.style.background = clicked === total ? 'grey' : '#a5d6a7';
+        const {essential, clicked, total} = threats[row];
+        const essentialPercent =Math.round(100 * essential / total);
+        let donePercent = Math.round(100 * clicked / total);
+        let stops = [
+          `#00FF30 0%,#00FF30 ${essentialPercent}%`,
+          `#CCFF99 ${essentialPercent}%,#CCFF99 ${donePercent}%`,
+          `grey ${donePercent}%,grey 100%`,
+        ];
+        td.style.background = `linear-gradient(to bottom, ${stops.join(', ')})`;
       }
 
       ++col;
