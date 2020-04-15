@@ -129,7 +129,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
   storage.onRemove = id => $(id).classList.remove('done');
 
   const imgCreators = ['blank', 'yellow', 'orange', 'red'].map(c => _ => "flame-" + c);
-  imgCreators.push(r => "runestone-" + toId(r));
+  imgCreators.push(r => "runestone-" + toId(r).toLowerCase());
   for (const f of imgCreators) {
     const tr = document.createElement("tr");
     $("tab-Summary").appendChild(tr);
