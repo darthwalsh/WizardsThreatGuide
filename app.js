@@ -47,6 +47,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     High: 1,
     Severe: 2,
     Emergency: 3,
+    WizardingChallenges: 4.
   };
 
   async function updateSummary() {
@@ -54,15 +55,21 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
     let col = 0;
     for (const reg of Object.values(registry)) {
-      const threats = Array(4).fill().map(_ => ({clicked: 0, total: 0}));
+      const threats = Array(5).fill().map(_ => ({clicked: 0, total: 0}));
       for (const sub of Object.values(reg)) {
         for (const name in sub) {
           const {level, collect} = sub[name];
-          if (!collect.includes('Wild')) continue;
 
-          const row = levelToRow[level];
+          let row;
+          if (collect.includes('Wild')) {
+            row = levelToRow[level];
+          } else if (collect.includes('Wizarding Challenges')) {
+            row = levelToRow.WizardingChallenges;
+          } else {
+            continue;
+          }
+
           ++threats[row].total;
-
           if (await storage.get(toId(name))) {
             ++threats[row].clicked;
           }
@@ -121,16 +128,17 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
   storage.onAdd = id => $(id).classList.add('done');
   storage.onRemove = id => $(id).classList.remove('done');
 
-  const colors = ['blank', 'yellow', 'orange', 'red'];
-  for (const color of colors) {
+  const imgCreators = ['blank', 'yellow', 'orange', 'red'].map(c => _ => "flame-" + c);
+  imgCreators.push(r => "runestone-" + toId(r));
+  for (const f of imgCreators) {
     const tr = document.createElement("tr");
     $("tab-Summary").appendChild(tr);
-    for (const _ in registry) {
+    for (const r in registry) {
       const td = document.createElement("td");
       tr.appendChild(td);
       const img = document.createElement("img");
       td.appendChild(img);
-      img.src = `img/flame-${color}.png`;
+      img.src = `img/${f(r)}.png`;
     }
   }
 

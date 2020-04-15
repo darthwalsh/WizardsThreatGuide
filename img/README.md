@@ -2,6 +2,10 @@
 Images found from https://www.wizardunite.com/2019/05/hpwu-foundables-and-traces.html
 then compressed with https://tinypng.com/
 
+## Runestone icons
+Images found from https://harrypotterwizardsunite.fandom.com/
+then compressed with https://tinypng.com/
+
 ## Flame images
 Measuring from https://i.redd.it/0l2efsqj05731.jpg
 
