@@ -96,7 +96,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
         const td = tr.children[col];
         const {essential, clicked, total} = threats[row];
         const essentialPercent =Math.round(100 * essential / total);
-        let donePercent = Math.round(100 * clicked / total);
+        let donePercent = Math.round(100 * (1 - clicked / total));
         let stops = [
           `#00FF30 0%,#00FF30 ${essentialPercent}%`,
           `#CCFF99 ${essentialPercent}%,#CCFF99 ${donePercent}%`,
