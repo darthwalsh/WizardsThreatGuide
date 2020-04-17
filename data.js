@@ -253,6 +253,13 @@ const registry = {
       "Foe Glass": {level: "High", collect: "Portkey & Wild"},
       "Giants Helm": {level: "Low", collect: "Wild"},
       "Mandrake": {level: "High", collect: "Wild"},
+    },
+    "Weasleys’ Wizarding Wheezes": {
+      "Proprietor George Weasley": {level: "Severe", collect: "Wild"},
+      "Proprietor Fred Weasley": {level: "Severe", collect: "Wild"},
+      "Puking Pastille Display": {level: "High", collect: "Wild"},
+      "Lee Jordan": {level: "High", collect: "Wild"},
+      "Open Skiving Snackboxes": {collect: "Wizarding Challenges"},
     }
   },
   "Oddities": {
