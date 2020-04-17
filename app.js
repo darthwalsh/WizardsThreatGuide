@@ -150,6 +150,8 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
   storage.onAdd = id => $(id).classList.add('done');
   storage.onRemove = id => $(id).classList.remove('done');
+  // TODO add gear spinner for settings storage.onBusy =
+  // https://codepen.io/sketchbookkeeper/pen/jrmYXm
 
   const imgCreators = ['blank', 'yellow', 'orange', 'red'].map(c => _ => "flame-" + c);
   imgCreators.push(r => "runestone-" + toId(r).toLowerCase());
