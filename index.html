@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Threat Guide for Wizards Unite</title>
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+    <link rel="stylesheet" href="style.css" />
     <script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-auth.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/7.13.1/firebase-database.js"></script>
@@ -14,10 +14,11 @@
   </head>
   <body>
     <div id="front" class="front">
-      <button id="sync">Sign in wih Google</button> <br />
+      <button id="sync">Sign in wih Google</button>
+      <br />
       <button id="anon">Use as guest</button>
     </div>
-    <div id="data" class="front" style="display: none">
+    <div id="data" class="front" style="display: none;">
       <textarea id="textarea"></textarea>
       <button id="export-copy">Copy</button>
       <button id="import-button">Import</button>
@@ -25,18 +26,19 @@
     <div class="float" dir="rtl">
       <details>
         <summary>Settings</summary>
-        <button id="sign-out">Sign out</button> <br />
-        <button id="import-export">Import/Export</button> <br />
+        <button id="sign-out">Sign out</button>
+        <br />
+        <button id="import-export">Import/Export</button>
+        <br />
         <button id="issue">Report Issue</button>
+      </details>
     </div>
     <h1>Threat Guide for Wizards Unite</h1>
     <table>
       <thead>
-        <tr id="tabs">
-        </tr>
+        <tr id="tabs"></tr>
       </thead>
-      <tbody id="tab-Summary" style="display: none">
-      </tbody>
+      <tbody id="tab-Summary" style="display: none;"></tbody>
     </table>
     <div id="tab"></div>
   </body>

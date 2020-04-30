@@ -3,18 +3,20 @@ function getStorage() {
   if (!method) return null;
 
   switch (method) {
-    case "local": return new StorageLocal();
-    case "sync": return new StorageSync();
+    case "local":
+      return new StorageLocal();
+    case "sync":
+      return new StorageSync();
   }
   throw new Error("unrecognized storage " + method);
 }
 
 function storageMethod() {
-  return localStorage.getItem('__STORAGE');
+  return localStorage.getItem("__STORAGE");
 }
 
 function useStorage(method) {
-  localStorage.setItem('__STORAGE', method);
+  localStorage.setItem("__STORAGE", method);
   return getStorage();
 }
 
@@ -41,7 +43,7 @@ class StorageLocal {
 }
 
 class StorageSync {
-  async init() {    
+  async init() {
     StorageSync.initFirebase();
 
     const database = firebase.database();
@@ -57,13 +59,13 @@ class StorageSync {
     if (!user) {
       await auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
     }
-    
-    const userRef = database.ref('users').child(user.uid);
-    userRef.child('__MODIFIED').set(new Date().toJSON());
-    this.doneRef = userRef.child('done');
 
-    this.doneRef.on('child_added', data => this.onAdd && this.onAdd(data.key));
-    this.doneRef.on('child_removed', data => this.onRemove && this.onRemove(data.key));
+    const userRef = database.ref("users").child(user.uid);
+    userRef.child("__MODIFIED").set(new Date().toJSON());
+    this.doneRef = userRef.child("done");
+
+    this.doneRef.on("child_added", data => this.onAdd && this.onAdd(data.key));
+    this.doneRef.on("child_removed", data => this.onRemove && this.onRemove(data.key));
   }
 
   constructor() {
@@ -72,12 +74,12 @@ class StorageSync {
 
   async keys() {
     await this.ready;
-    const doneSnapshot = await this.doneRef.once('value');
+    const doneSnapshot = await this.doneRef.once("value");
     return Object.keys(doneSnapshot.val() || []);
   }
   async get(key) {
     await this.ready;
-    const snapshot = await this.doneRef.child(key).once('value');
+    const snapshot = await this.doneRef.child(key).once("value");
     return Boolean(snapshot.val());
   }
   async set(key, value) {
@@ -103,4 +105,4 @@ StorageSync.initFirebase = () => {
   };
   firebase.initializeApp(firebaseConfig);
   StorageSync.firebaseInit = true;
-}
+};

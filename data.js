@@ -27,7 +27,7 @@ const registry = {
       "Blast-Ended Skrewt": {level: "Medium", collect: "Wild"},
       "Dragon Egg": {level: "Medium", collect: "Portkey & Wild"},
       "Puffskein": {collect: "Wizarding Challenges"},
-    }
+    },
   },
   "Dark Arts": {
     "Borgin & Burkes": {
@@ -51,7 +51,7 @@ const registry = {
       "Percival Graves": {level: "Severe", collect: "Wild"},
       "Tom Riddle": {level: "Emergency", collect: "Wild"},
       "Portrait of Voldemort": {level: "High", collect: "Portkey & Wild"},
-    }
+    },
   },
   "Hogwarts School": {
     "DADA Classroom": {
@@ -82,7 +82,7 @@ const registry = {
       "Rowena Ravenclaw Wizard Portrait": {level: "High", collect: "Wild"},
       "Salazar Slytherin Wizard Portrait": {level: "High", collect: "Wild"},
       "Godric Gryffindor Wizard Portrait": {level: "High", collect: "Wild"},
-    }
+    },
   },
   "Legends of Hogwarts": {
     "Room of Requirement I": {
@@ -127,7 +127,7 @@ const registry = {
       "Young Remus Lupin": {level: "Severe", collect: "Wild"},
       "Young Peter Pettigrew": {level: "High", collect: "Wild"},
       "Unfinished Marauder’s Map": {collect: "Wizarding Challenges"},
-    }
+    },
   },
   "Ministry of Magic": {
     "Ministry Atrium": {
@@ -150,7 +150,7 @@ const registry = {
       "Ministry Visitors Entrance": {collect: "Wizarding Challenges"},
       "Wizengamot Accusation Chair": {collect: "Wizarding Challenges"},
       "Nymphadora Tonks": {level: "High", collect: "Wild"},
-    }
+    },
   },
   "Magizoology": {
     "Newt’s Case": {
@@ -174,7 +174,7 @@ const registry = {
       "Unicorn": {level: "Severe", collect: "Wild"},
       "Occamy Eggs": {level: "High", collect: "Portkey & Wild"},
       "Occamy": {collect: "Wizarding Challenges"},
-    }
+    },
   },
   "Magical Games and Sports": {
     "World Cup Grounds": {
@@ -205,7 +205,7 @@ const registry = {
       "Quidditch Fan Luna": {level: "High", collect: "Wild"},
       "Quidditch Fan Neville": {level: "High", collect: "Wild"},
       "Quidditch Fan Hermione": {level: "Severe", collect: "Wild"},
-    }
+    },
   },
   "Mysterious Artefacts": {
     "Room of Requirement II": {
@@ -229,7 +229,7 @@ const registry = {
       "Time Turner": {level: "Emergency", collect: "Wild"},
       "Omnioculars": {level: "Medium", collect: "Wild"},
       "Sirius Flying Motorbike": {collect: "Wizarding Challenges"},
-    }
+    },
   },
   "Wonders of the Wizarding World": {
     "Room of Requirement IV": {
@@ -260,7 +260,7 @@ const registry = {
       "Puking Pastille Display": {level: "High", collect: "Wild"},
       "Lee Jordan": {level: "High", collect: "Wild"},
       "Open Skiving Snackboxes": {collect: "Wizarding Challenges"},
-    }
+    },
   },
   "Oddities": {
     "Oddities I": {
@@ -293,7 +293,6 @@ const registry = {
       "Azkaban Escapee": {level: "Medium", collect: "Wild"},
       "Death Eater": {level: "Severe", collect: "Wild"},
       "Fluffy/Three Headed Dog": {level: "Emergency", collect: "Wild"},
-    }
-  }
+    },
+  },
 };
-

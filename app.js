@@ -12,10 +12,14 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
       $("anon").onclick = () => res(useStorage("local"));
     });
   }
-  $("front").style.display = 'none';
+  $("front").style.display = "none";
   switch (storageMethod()) {
-    case "sync": $("sign-out").innerText = "Sign out of Google"; break;
-    case "local": $("sign-out").innerText = "Clear local storage"; break;
+    case "sync":
+      $("sign-out").innerText = "Sign out of Google";
+      break;
+    case "local":
+      $("sign-out").innerText = "Clear local storage";
+      break;
   }
 
   function $(id) {
@@ -34,11 +38,11 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
     if (selectedTab) {
       $("tab-" + selectedTab).style.display = "none";
-      if (selectedTab !== "Summary") $(selectedTab).style.background = '';
+      if (selectedTab !== "Summary") $(selectedTab).style.background = "";
     }
     selectedTab = id;
     $("tab-" + selectedTab).style.display = "";
-    if (selectedTab !== "Summary") $(selectedTab).style.background = 'grey';
+    if (selectedTab !== "Summary") $(selectedTab).style.background = "grey";
   }
 
   const levelToRow = {
@@ -47,7 +51,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     High: 1,
     Severe: 2,
     Emergency: 3,
-    WizardingChallenges: 4.
+    WizardingChallenges: 4,
   };
 
   async function updateSummary() {
@@ -59,7 +63,7 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
       for (const sub of Object.values(reg)) {
         let unfinished = [];
         for (const name in sub) {
-          if (!await storage.get(toId(name))) {
+          if (!(await storage.get(toId(name)))) {
             unfinished.push(toId(name));
           }
         }
@@ -68,15 +72,17 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
         }
       }
 
-      const threats = Array(5).fill().map(_ => ({essential: 0, clicked: 0, total: 0}));
+      const threats = Array(5)
+        .fill()
+        .map(_ => ({essential: 0, clicked: 0, total: 0}));
       for (const sub of Object.values(reg)) {
         for (const name in sub) {
           const {level, collect} = sub[name];
 
           let row;
-          if (collect.includes('Wild')) {
+          if (collect.includes("Wild")) {
             row = levelToRow[level];
-          } else if (collect.includes('Wizarding Challenges')) {
+          } else if (collect.includes("Wizarding Challenges")) {
             row = levelToRow.WizardingChallenges;
           } else {
             continue;
@@ -95,14 +101,14 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
       for (let tr = tbody.firstElementChild, row = 0; tr; tr = tr.nextElementSibling, ++row) {
         const td = tr.children[col];
         const {essential, clicked, total} = threats[row];
-        const essentialPercent =Math.round(100 * essential / total);
+        const essentialPercent = Math.round((100 * essential) / total);
         let donePercent = Math.round(100 * (1 - clicked / total));
         let stops = [
           `#00FF30 0%,#00FF30 ${essentialPercent}%`,
           `#CCFF99 ${essentialPercent}%,#CCFF99 ${donePercent}%`,
           `grey ${donePercent}%,grey 100%`,
         ];
-        td.style.background = `linear-gradient(to bottom, ${stops.join(', ')})`;
+        td.style.background = `linear-gradient(to bottom, ${stops.join(", ")})`;
       }
 
       ++col;
@@ -132,8 +138,8 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
       const span = document.createElement("span");
       tab.appendChild(span);
       span.innerText = s;
-      span.id = r + '.' + s;
-      
+      span.id = r + "." + s;
+
       const ul = document.createElement("ul");
       tab.appendChild(ul);
 
@@ -143,17 +149,17 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
         ul.appendChild(li);
         li.innerText = name;
         li.id = toId(name);
-        storage.get(li.id).then(done => done && li.classList.add('done'));
+        storage.get(li.id).then(done => done && li.classList.add("done"));
       }
     }
   }
 
-  storage.onAdd = id => $(id).classList.add('done');
-  storage.onRemove = id => $(id).classList.remove('done');
+  storage.onAdd = id => $(id).classList.add("done");
+  storage.onRemove = id => $(id).classList.remove("done");
   // TODO add gear spinner for settings storage.onBusy =
   // https://codepen.io/sketchbookkeeper/pen/jrmYXm
 
-  const imgCreators = ['blank', 'yellow', 'orange', 'red'].map(c => _ => "flame-" + c);
+  const imgCreators = ["blank", "yellow", "orange", "red"].map(c => _ => "flame-" + c);
   imgCreators.push(r => "runestone-" + toId(r).toLowerCase());
   for (const f of imgCreators) {
     const tr = document.createElement("tr");
@@ -170,14 +176,14 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
   $("tabs").onclick = e => e.target.nodeName === "IMG" && switchTab(e.target.id);
 
   function toId(name) {
-    return name.replace(/[^a-z]/gi, '');
+    return name.replace(/[^a-z]/gi, "");
   }
   async function toggleDone(id) {
     const before = await storage.get(id);
     return storage.set(id, !before);
   }
   async function toggleAll(id) {
-    const [reg, sub] = id.split('.');
+    const [reg, sub] = id.split(".");
     const ids = Object.keys(registry[reg][sub]).map(toId);
     const allDones = await Promise.all(ids.map(async id => await storage.get(id)));
     const noneDone = allDones.every(done => !done);
@@ -185,11 +191,15 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
   }
 
   $("tab").onclick = e => {
-    switch(e.target.nodeName) {
-      case "LI": toggleDone(e.target.id); break;
-      case "SPAN": toggleAll(e.target.id); break;
+    switch (e.target.nodeName) {
+      case "LI":
+        toggleDone(e.target.id);
+        break;
+      case "SPAN":
+        toggleAll(e.target.id);
+        break;
     }
-  }
+  };
 
   $("sign-out").onclick = () => {
     storage.clear();
@@ -197,21 +207,23 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
   };
 
   $("import-export").onclick = async () => {
-    $("data").style.display = '';
-    $("textarea").value = (await storage.keys()).join('\n');
+    $("data").style.display = "";
+    $("textarea").value = (await storage.keys()).join("\n");
   };
   $("export-copy").onclick = () => {
     navigator.clipboard.writeText($("textarea").value);
-    $("data").style.display = 'none';
+    $("data").style.display = "none";
   };
   $("import-button").onclick = () => {
-    $("textarea").value.split('\n').forEach(s => storage.set(s, true));
-    $("data").style.display = 'none';
-  }
+    $("textarea")
+      .value.split("\n")
+      .forEach(s => storage.set(s, true));
+    $("data").style.display = "none";
+  };
 
   $("data").onclick = e => {
-    if (e.target === $("data")) $("data").style.display = 'none';
-  }
+    if (e.target === $("data")) $("data").style.display = "none";
+  };
 
   // TODO add README
   $("issue").onclick = async () => {
@@ -224,10 +236,12 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
 **Your configuration:**
 ${codeBlock}
-${(await storage.keys()).join('\n')}
+${(await storage.keys()).join("\n")}
 ${codeBlock}`;
-    const url = `https://github.com/darthwalsh/WizardsThreatGuide/issues/new?body=${encodeURIComponent(body)}`;
-    var win = window.open(url, '_blank');
+    const url = `https://github.com/darthwalsh/WizardsThreatGuide/issues/new?body=${encodeURIComponent(
+      body
+    )}`;
+    var win = window.open(url, "_blank");
     win.focus();
   };
 })();
