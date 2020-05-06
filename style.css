@@ -61,6 +61,10 @@ ul {
   text-decoration: line-through;
 }
 
+.desc {
+  color: #170a3e;
+}
+
 textarea {
   width: 40em;
   height: 90%;

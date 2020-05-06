@@ -61,14 +61,16 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
     for (const reg of Object.values(registry)) {
       const essentials = [];
       for (const sub of Object.values(reg)) {
-        let unfinished = [];
+        let unfinished = [], unfinishedThreats = new Set;
         for (const name in sub) {
           if (!(await storage.get(toId(name)))) {
             unfinished.push(toId(name));
+            unfinishedThreats.add(sub[name].level)
           }
         }
-        if (unfinished.length === 1) {
-          essentials.push(unfinished[0]);
+
+        if (unfinishedThreats.size === 1) {
+          essentials.push(...unfinished);
         }
       }
 
@@ -150,6 +152,12 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
         li.innerText = name;
         li.id = toId(name);
         storage.get(li.id).then(done => done && li.classList.add("done"));
+
+        const desc = document.createElement("span");
+        li.appendChild(desc);
+        const {level, collect} = sub[name];
+        desc.innerText = " - " + (level || collect);
+        desc.classList.add("desc");
       }
     }
   }
