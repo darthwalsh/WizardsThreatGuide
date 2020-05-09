@@ -149,15 +149,11 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
       for (const name in sub) {
         const li = document.createElement("li");
         ul.appendChild(li);
-        li.innerText = name;
+
+        const {level, collect} = sub[name];
+        li.innerText = name + " - " + (level || collect);
         li.id = toId(name);
         storage.get(li.id).then(done => done && li.classList.add("done"));
-
-        const desc = document.createElement("span");
-        li.appendChild(desc);
-        const {level, collect} = sub[name];
-        desc.innerText = " - " + (level || collect);
-        desc.classList.add("desc");
       }
     }
   }
