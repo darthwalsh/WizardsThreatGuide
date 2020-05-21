@@ -206,6 +206,13 @@ const registry = {
       "Quidditch Fan Neville": {level: "High", collect: "Wild"},
       "Quidditch Fan Hermione": {level: "Severe", collect: "Wild"},
     },
+    "Hogwarts Quidditch Pitch II": {
+      "Slytherin Quidditch Banner": {collect: "Wizarding Challenges"},
+      "Quidditch Captain Marcus Flint": {level: "Medium", collect: "Wild"},
+      "Slytherin Seeker Draco Malfoy": {level: "Severe", collect: "Wild"},
+      "Quidditch Captain Cedric Diggory": {level: "Severe", collect: "Wild"},
+      "Madam Hooch": {level: "High", collect: "Wild"},
+    },
   },
   "Mysterious Artefacts": {
     "Room of Requirement II": {
