@@ -47,9 +47,9 @@ window.addEventListener("error", e => alert(e.error.message + " from " + e.error
 
   const levelToRow = {
     Low: 0,
-    Medium: 0,
-    High: 1,
-    Severe: 2,
+    Medium: 1,
+    High: 2,
+    Severe: 3,
     Emergency: 3,
     WizardingChallenges: 4,
   };
